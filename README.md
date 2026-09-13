@@ -1,16 +1,123 @@
-# React + Vite
+# ❄️ POLAR — Polar Expedition Logistics & Asset Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> An integrated digital command center for planning, tracking, and managing
+> polar expeditions, cargo, inventory, personnel, transportation, and
+> emergency response.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌐 Overview
 
-## React Compiler
+POLAR is a centralized expedition management platform designed to support
+polar research missions in extreme and remote environments.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The system brings expedition planning, cargo tracking, inventory management,
+personnel movement, transportation monitoring, and emergency response into
+one intelligent command center.
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🎯 Problem Statement
+
+**SIH26062 — Integrated Polar Expedition Logistics and Asset Management System**
+
+The platform addresses the challenges of managing:
+
+- 🚢 Expedition logistics
+- 📦 Cargo movement
+- 📊 Inventory and supplies
+- 👥 Personnel movement
+- 🚨 Emergency situations
+- 🌦️ Environmental and operational risks
+
+---
+
+## ✨ Key Features
+
+### 🚢 Expedition Management
+
+- Create and manage expeditions
+- Track expedition status
+- Manage stations and routes
+- Monitor mission timelines
+
+### 📦 Cargo Tracking
+
+- Cargo identification and categorization
+- Shipment tracking
+- Origin and destination management
+- Cargo status monitoring
+- ETA tracking
+
+### 📊 Smart Inventory
+
+- Real-time stock monitoring
+- Fuel, food, medicine and oxygen tracking
+- Low-stock alerts
+- Consumption monitoring
+- Inventory forecasting
+- Resupply recommendations
+
+### 👥 Personnel Management
+
+- Personnel registration
+- Station assignment
+- Movement tracking
+- Arrival/departure monitoring
+- Personnel status management
+
+### 🚨 Emergency Response
+
+- Critical incident detection
+- Personnel affected by emergencies
+- Nearby resource identification
+- Emergency response recommendations
+- Risk assessment
+
+### 🌦️ Risk & Weather Intelligence
+
+- Weather-aware logistics
+- Transport risk monitoring
+- Operational risk scoring
+- Weather impact on ETA and supplies
+
+### 🤖 AI Logistics Assistant
+
+- Explain operational risks
+- Recommend resupply actions
+- Analyze expedition conditions
+- Support logistics decision-making
+
+---
+
+## 🧠 Intelligent Decision Support
+
+POLAR follows a simple operational intelligence cycle:
+
+**MONITOR → PREDICT → SIMULATE → RECOMMEND → ACT**
+
+Instead of simply displaying data, POLAR helps expedition managers understand
+what may happen next and what action should be taken.
+
+---
+
+## 🏗️ System Architecture
+
+```text
+┌─────────────────────────────┐
+│        POLAR Web App        │
+│     React + Vite + UI       │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│        Backend API          │
+│       Node.js / Express     │
+└──────────────┬──────────────┘
+               │
+       ┌───────┴────────┐
+       ▼                ▼
+┌─────────────┐  ┌─────────────┐
+│ PostgreSQL  │  │ AI Services │
+│  Database   │  │ Intelligence │
+└─────────────┘  └─────────────┘ 
