@@ -236,20 +236,6 @@ Open the local URL shown in the terminal, usually:
 http://localhost:5173
 ```
 
-## 🏆 SIH 2026 Alignment
-
-| Requirement | POLAR |
-|---|---|
-| Expedition Planning | ✅ |
-| Cargo Tracking | ✅ |
-| Inventory Management | ✅ |
-| Personnel Movement | ✅ |
-| Asset Management | ✅ |
-| Emergency Response | ✅ |
-| Weather Monitoring | ✅ |
-| Risk Intelligence | 🚧 |
-| AI Decision Support | 🚧 |
-| What-If Simulation | 🚧 |
 
 ## 🔮 Future Scope
 
