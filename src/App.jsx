@@ -646,7 +646,6 @@ function GlobalStyle(){
       @media (max-width: 768px) {
         .polar-login-grid {
           grid-template-columns: 1fr !important;
-          max-width: 480px !important;
         }
         .polar-login-grid > div:first-child {
           border-right: none !important;
@@ -953,12 +952,12 @@ function LoginView({ onLogin, themeMode, onToggleTheme }){
   }
 
   return (
-    <div className="polar-root" style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", position:"relative", padding:16 }}>
+    <div className="polar-root" style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", position:"relative" }}>
       <GlobalStyle/>
       <button onClick={onToggleTheme} title="Toggle theme" style={{ position:"absolute", top:20, right:20, width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", background:T.panel, border:`1px solid ${T.border}`, borderRadius:8, color:T.iceDim, cursor:"pointer" }}>
         {themeMode==="dark" ? <Sun size={16}/> : <Moon size={16}/>}
       </button>
-      <div className="polar-login-grid" style={{ position:"relative", zIndex:1, width:"100%", maxWidth:"min(1400px, 92vw)", display:"grid", gridTemplateColumns:"1.1fr 0.9fr", gap:0, border:`1px solid ${T.border}`, borderRadius:12, overflow:"hidden", boxShadow:"0 12px 32px rgba(16,24,40,0.08)" }}>
+      <div className="polar-login-grid" style={{ position:"relative", zIndex:1, width:"100%", height:"100%", display:"grid", gridTemplateColumns:"1.1fr 0.9fr", gap:0, border:"none", borderRadius:0, overflow:"hidden" }}>
         <div style={{ padding:"46px 40px", background:T.subtle, borderRight:`1px solid ${T.border}` }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:26 }}>
             <Snowflake size={22} color={T.cyan}/>
