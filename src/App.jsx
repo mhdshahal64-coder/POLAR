@@ -11,7 +11,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, AreaChart, Area, Legend
 } from "recharts";
- 
+
 /* =====================================================================
    POLAR — Integrated Polar Expedition Logistics & Asset Management
    Design tokens
@@ -37,7 +37,7 @@ const LIGHT_THEME = {
   mapBg: "#EEF2F7",
   mapLand: "#DCE3EC",
 };
- 
+
 const DARK_THEME = {
   void: "#0B0F17",
   panel: "#161B26",
@@ -59,21 +59,21 @@ const DARK_THEME = {
   mapBg: "#0E1420",
   mapLand: "#1B2333",
 };
- 
+
 // Mutable token object — components read T.xxx at render time, so
 // mutating its properties (see applyTheme) and forcing a re-render
 // is enough to re-theme the whole tree without prop-drilling.
 const T = { ...LIGHT_THEME };
 function applyTheme(mode){ Object.assign(T, mode === "dark" ? DARK_THEME : LIGHT_THEME); }
- 
+
 const fontHead = "'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif";
 const fontMono = "'Roboto Mono', 'SFMono-Regular', Menlo, monospace";
- 
+
 /* =====================================================================
    SEED DATA — realistic demo data
 ===================================================================== */
 const ROLES = ["ADMIN","EXPEDITION_MANAGER","LOGISTICS_OFFICER","STATION_MANAGER","RESEARCHER","EMERGENCY_COORDINATOR"];
- 
+
 const DEMO_ACCOUNTS = [
   { id:"u1", name:"Kabir Anand", role:"ADMIN", email:"kabir.anand@polar.gov.in", password:"admin123" },
   { id:"u2", name:"Priya Deshmukh", role:"EXPEDITION_MANAGER", email:"priya.deshmukh@polar.gov.in", password:"expo123" },
@@ -82,19 +82,19 @@ const DEMO_ACCOUNTS = [
   { id:"u5", name:"Dev Sharma", role:"RESEARCHER", email:"dev.sharma@polar.gov.in", password:"rsch123" },
   { id:"u6", name:"Meera Nair", role:"EMERGENCY_COORDINATOR", email:"meera.nair@polar.gov.in", password:"emrg123" },
 ];
- 
+
 const STATIONS = [
   { id:"maitri", name:"Maitri", full:"Maitri Research Station", lat:-70.76, lng:11.73, x:38, y:34, commsOk:true },
   { id:"bharati", name:"Bharati", full:"Bharati Research Station", lat:-69.41, lng:76.19, x:68, y:40, commsOk:true },
   { id:"dg", name:"Dakshin Gangotri", full:"Dakshin Gangotri Camp", lat:-70.05, lng:12.00, x:40, y:46, commsOk:true },
 ];
- 
+
 const WEATHER0 = {
   maitri:   { temp:-24, wind:38, visibility:6, snow:"Moderate", ice:"Consolidated", severity:"MODERATE" },
   bharati:  { temp:-19, wind:26, visibility:9, snow:"Light",    ice:"Stable",       severity:"LOW" },
   dg:       { temp:-28, wind:52, visibility:2, snow:"Heavy",    ice:"Shifting",     severity:"SEVERE" },
 };
- 
+
 const PERSONNEL0 = [
   { id:"P001", name:"Arjun Malhotra", role:"Station Doctor", skills:["Medical","Trauma"], station:"maitri", status:"ON_DUTY" },
   { id:"P002", name:"Sanya Kapoor", role:"Station Doctor", skills:["Medical","Surgery"], station:"maitri", status:"ON_DUTY" },
@@ -129,10 +129,10 @@ for (let i=26;i<=54;i++){
   const roles = ["Research Assistant","Mechanic","Cargo Handler","Radio Operator","Field Technician"];
   PERSONNEL0.push({ id:`P0${i}`, name:names[i%names.length]+" "+i, role:roles[i%roles.length], skills:["General"], station:stn, status:"ON_DUTY" });
 }
- 
+
 const CARGO_CATEGORIES = ["Food","Fuel","Scientific Equipment","Medicine","Spare Parts","Clothing","Emergency Supplies","Communication Equipment"];
 const CARGO_STATUSES = ["REQUESTED","APPROVED","PACKED","LOADED","IN_TRANSIT","ARRIVED","RECEIVED","DAMAGED","LOST"];
- 
+
 function seedCargo(){
   const items = [
     ["Frozen Rations Pallet","Food",1200,"kg"],["Rice & Pulses Crate","Food",800,"kg"],
@@ -168,7 +168,7 @@ function seedCargo(){
   });
 }
 const CARGO0 = seedCargo();
- 
+
 const TRANSPORT0 = [
   { id:"TRN-01", name:"MV Polar Star", type:"Ship", capacityKg:180000, location:"Goa Port", destination:"bharati", status:"IN_TRANSIT", etaDays:12, fuelPct:82, weatherRisk:"LOW" },
   { id:"TRN-02", name:"MV Ice Voyager", type:"Ship", capacityKg:150000, location:"Cape Town", destination:"maitri", status:"READY", etaDays:0, fuelPct:95, weatherRisk:"LOW" },
@@ -179,7 +179,7 @@ const TRANSPORT0 = [
   { id:"TRN-07", name:"Cargo Truck T1", type:"Truck", capacityKg:8000, location:"bharati", destination:"bharati", status:"READY", etaDays:0, fuelPct:77, weatherRisk:"LOW" },
   { id:"TRN-08", name:"IAF Transport Aircraft", type:"Aircraft", capacityKg:40000, location:"Goa Airbase", destination:"bharati", status:"READY", etaDays:0, fuelPct:100, weatherRisk:"LOW" },
 ];
- 
+
 function seedInventory(){
   const defs = [
     // item, category, unit, per-station qty[maitri,bharati,dg], dailyUse[maitri,bharati,dg], min, safety
@@ -209,7 +209,7 @@ function seedInventory(){
   return rows;
 }
 const INVENTORY0 = seedInventory();
- 
+
 const ASSETS0 = [
   { id:"AST-01", name:"Diesel Generator Unit 1", category:"Power Systems", station:"maitri", condition:"GOOD", status:"OPERATIONAL", assigned:"Vikram Rathore", lastMaint:"2026-06-12", nextMaint:"2026-12-12" },
   { id:"AST-02", name:"Diesel Generator Unit 2", category:"Power Systems", station:"maitri", condition:"FAIR", status:"WARNING", assigned:"Vikram Rathore", lastMaint:"2026-03-02", nextMaint:"2026-09-02" },
@@ -226,11 +226,11 @@ const ASSETS0 = [
   { id:"AST-13", name:"Snowmobile Fleet (x4)", category:"Vehicles", station:"dg", condition:"FAIR", status:"OPERATIONAL", assigned:"Omkar Desai", lastMaint:"2026-06-20", nextMaint:"2026-09-20" },
   { id:"AST-14", name:"Field Radio Repeater", category:"Communication Equipment", station:"dg", condition:"GOOD", status:"OPERATIONAL", assigned:"Zara Ahmed", lastMaint:"2026-07-05", nextMaint:"2027-01-05" },
 ];
- 
+
 const EMERGENCIES0 = [
   { id:"EMG-01", station:"dg", location:"Camp Perimeter", type:"EXTREME_WEATHER", severity:"HIGH", time:"2026-09-12 06:40", affected:6, requiredResources:["Shelter","Communication"], status:"MONITORING" },
 ];
- 
+
 const WEATHER_SEVERITY_RISK = { LOW:5, MODERATE:15, SEVERE:30 };
 /* =====================================================================
    PREDICTIVE INVENTORY ENGINE
@@ -246,12 +246,12 @@ function inventoryStatus(row, weather, resupplyDays){
   const expectedUsage = dailyUse * resupplyDays;
   const projectedQuantity = available - expectedUsage;
   const requiredQuantity = Math.max(expectedUsage - available + row.safetyStock, 0);
- 
+
   let status = "SAFE";
   if (projectedQuantity < 0 || daysRemaining < resupplyDays * 0.4) status = "CRITICAL";
   else if (projectedQuantity < row.safetyStock || daysRemaining < resupplyDays * 0.85) status = "WARNING";
   if (available <= row.minThreshold) status = "CRITICAL";
- 
+
   return {
     ...row, dailyUse: Math.round(dailyUse*10)/10, daysRemaining: Math.round(daysRemaining*10)/10,
     depletionDate: depletionDate.toISOString().slice(0,10), gapDays: Math.round(gapDays*10)/10,
@@ -259,7 +259,7 @@ function inventoryStatus(row, weather, resupplyDays){
     status,
   };
 }
- 
+
 function computeInventoryFull(inventory, weatherMap, resupplyDaysByStation){
   return inventory.map(row=>{
     const wx = weatherMap[row.station];
@@ -267,7 +267,7 @@ function computeInventoryFull(inventory, weatherMap, resupplyDaysByStation){
     return inventoryStatus(row, wx, resupply);
   });
 }
- 
+
 /* Smart resupply recommendation engine */
 function resupplyRecommendations(computedInventory){
   return computedInventory
@@ -288,39 +288,39 @@ function resupplyRecommendations(computedInventory){
     })
     .sort((a,b)=> (a.priority==="CRITICAL"?0:1) - (b.priority==="CRITICAL"?0:1) || a.daysRemaining - b.daysRemaining);
 }
- 
+
 /* =====================================================================
    RISK ENGINE
 ===================================================================== */
 function computeRisk(computedInventory, transport, weatherMap, emergencies, assets){
   let score = 100;
   const contributors = [];
- 
+
   const critical = computedInventory.filter(r=>r.status==="CRITICAL").length;
   const warning = computedInventory.filter(r=>r.status==="WARNING").length;
   const invPenalty = critical*7 + warning*2.5;
   if (invPenalty>0){ score -= invPenalty; contributors.push({ label:"Inventory shortage", value: -Math.round(invPenalty) }); }
- 
+
   const wxPenalty = Object.values(weatherMap).reduce((s,w)=> s + (WEATHER_SEVERITY_RISK[w.severity]||0), 0)/3;
   if (wxPenalty>0){ score -= wxPenalty; contributors.push({ label:"Weather", value: -Math.round(wxPenalty) }); }
- 
+
   const delayed = transport.filter(t=>t.status==="DELAYED").length;
   const transPenalty = delayed*6 + transport.filter(t=>t.status==="MAINTENANCE"||t.status==="UNAVAILABLE").length*3;
   if (transPenalty>0){ score -= transPenalty; contributors.push({ label:"Transport delays", value: -Math.round(transPenalty) }); }
- 
+
   const brokenAssets = assets.filter(a=>a.status==="DAMAGED"||a.status==="OFFLINE").length;
   const assetPenalty = brokenAssets*4 + assets.filter(a=>a.status==="WARNING"||a.status==="UNDER_REPAIR").length*1.5;
   if (assetPenalty>0){ score -= assetPenalty; contributors.push({ label:"Asset failures", value: -Math.round(assetPenalty) }); }
- 
+
   const emgPenalty = emergencies.reduce((s,e)=> s + (e.status==="RESOLVED"?0: e.severity==="CRITICAL"?18:e.severity==="HIGH"?10:4), 0);
   if (emgPenalty>0){ score -= emgPenalty; contributors.push({ label:"Active emergencies", value: -Math.round(emgPenalty) }); }
- 
+
   score = Math.max(0, Math.min(100, Math.round(score)));
   let level = "LOW";
   if (score<40) level="CRITICAL"; else if (score<60) level="HIGH"; else if (score<80) level="MEDIUM";
   return { score, level, contributors: contributors.sort((a,b)=>a.value-b.value) };
 }
- 
+
 function stationRisk(stationId, computedInventory, weatherMap, emergencies){
   const rows = computedInventory.filter(r=>r.station===stationId);
   const critical = rows.filter(r=>r.status==="CRITICAL").length;
@@ -333,7 +333,7 @@ function stationRisk(stationId, computedInventory, weatherMap, emergencies){
   if (score<40) level="CRITICAL"; else if (score<60) level="HIGH"; else if (score<80) level="MEDIUM";
   return { score, level };
 }
- 
+
 /* =====================================================================
    ALERTS — dynamically generated, never hard-coded
 ===================================================================== */
@@ -380,7 +380,7 @@ const SCENARIOS = [
   { id:"extremeWx", label:"Extreme weather across region", apply:(s)=>({...s, extremeWx:true}) },
   { id:"evac", label:"Emergency evacuation at Bharati", apply:(s)=>({...s, evac:true}) },
 ];
- 
+
 function runSimulation(scenarioIds, inventory, weatherMap, resupplyDaysByStation, transport){
   let resupplyDelta=0, fuelMult=1, extraPersonnel=0, heliDown=false, stationCut=null, extremeWx=false, evac=false;
   scenarioIds.forEach(id=>{
@@ -395,14 +395,14 @@ function runSimulation(scenarioIds, inventory, weatherMap, resupplyDaysByStation
     if (r.extremeWx) extremeWx = true;
     if (r.evac) evac = true;
   });
- 
+
   const wxMap2 = {};
   Object.keys(weatherMap).forEach(k=>{
     wxMap2[k] = extremeWx ? { ...weatherMap[k], severity:"SEVERE" } : weatherMap[k];
   });
   const resupply2 = {};
   Object.keys(resupplyDaysByStation).forEach(k=> resupply2[k] = resupplyDaysByStation[k] + resupplyDelta);
- 
+
   const inv2 = inventory.map(row=>{
     let dailyConsumption = row.dailyConsumption;
     if (row.category==="Fuel") dailyConsumption *= fuelMult;
@@ -412,18 +412,18 @@ function runSimulation(scenarioIds, inventory, weatherMap, resupplyDaysByStation
     if (evac && row.station==="bharati") dailyConsumption *= 1.4;
     return { ...row, dailyConsumption };
   });
- 
+
   const computed = computeInventoryFull(inv2, wxMap2, resupply2);
   const risk = computeRisk(computed, transport, wxMap2, EMERGENCIES0, ASSETS0);
   const recs = resupplyRecommendations(computed);
- 
+
   const byCategory = {};
   computed.forEach(r=>{
     if (!byCategory[r.category]) byCategory[r.category] = "SAFE";
     const order = { SAFE:0, WARNING:1, CRITICAL:2 };
     if (order[r.status] > order[byCategory[r.category]]) byCategory[r.category] = r.status;
   });
- 
+
   const worst = recs[0];
   const impact = worst
     ? `${worst.item} shortage projected at ${worst.stationName} around ${worst.deadline}${worst.gapDays<0?"":""}.`
@@ -434,10 +434,10 @@ function runSimulation(scenarioIds, inventory, weatherMap, resupplyDaysByStation
         ? `Transfer ${worst.shortage} ${worst.unit} of ${worst.item} from ${donorStation.name} to ${worst.stationName}${heliDown ? " via surface vehicle (helicopter unavailable)" : ""}.`
         : `Expedite ${worst.shortage} ${worst.unit} of ${worst.item} to ${worst.stationName} on next available transport.`)
     : "Maintain current resupply schedule.";
- 
+
   return { computed, risk, recs, byCategory, impact, recommendation, scenarioIds, heliDown, stationCut, resupplyDelta };
 }
- 
+
 function findDonorStation(rec, computedInventory){
   const candidates = computedInventory.filter(r=>
     r.item===rec.item && r.station!==rec.station && r.status==="SAFE" &&
@@ -447,7 +447,7 @@ function findDonorStation(rec, computedInventory){
   const best = candidates.sort((a,b)=> (b.quantity-b.reserved) - (a.quantity-a.reserved))[0];
   return { id:best.station, name: STATIONS.find(s=>s.id===best.station)?.name, surplus: Math.round((best.quantity-best.reserved)-best.safetyStock) };
 }
- 
+
 /* =====================================================================
    SMART CARGO STOWAGE OPTIMIZER — greedy decreasing-weight bin packing
 ===================================================================== */
@@ -475,7 +475,7 @@ function optimizeStowage(cargoList, containerCapacityKg=12000, containerVolumeM3
   });
   return containers;
 }
- 
+
 /* =====================================================================
    EMERGENCY RESPONSE ENGINE
 ===================================================================== */
@@ -489,7 +489,7 @@ const EMERGENCY_NEEDS = {
   SUPPLY_SHORTAGE: { skills:["Cargo"], items:["Emergency Rations"] },
   EVACUATION: { skills:["Vehicles","Operations"], items:["Emergency Rations"] },
 };
- 
+
 function emergencyResponsePlan(emergency, personnel, computedInventory, transport){
   const need = EMERGENCY_NEEDS[emergency.type] || { skills:[], items:[] };
   const localResponders = personnel.filter(p=>p.station===emergency.station && need.skills.some(sk=>p.skills.includes(sk)));
@@ -502,9 +502,9 @@ function emergencyResponsePlan(emergency, personnel, computedInventory, transpor
     }).filter(Boolean);
     return { station: s, responders, supplies };
   }).filter(x=>x.responders.length || x.supplies.some(sp=>sp.surplus));
- 
+
   const availableTransport = transport.filter(t=> t.status==="READY" && (t.location===emergency.station || t.destination===emergency.station));
- 
+
   const steps = [];
   if (localResponders.length) steps.push(`Deploy on-site responder ${localResponders[0].name} (${localResponders[0].role}) at ${STATIONS.find(s=>s.id===emergency.station)?.name}.`);
   const donor = nearbyHelp.find(h=>h.responders.length) || nearbyHelp[0];
@@ -515,7 +515,7 @@ function emergencyResponsePlan(emergency, personnel, computedInventory, transpor
   }
   if (availableTransport.length) steps.push(`Assign ${availableTransport[0].name} for rapid transfer.`);
   else steps.push(`No ready transport at ${STATIONS.find(s=>s.id===emergency.station)?.name} — request nearest available asset.`);
- 
+
   return { need, localResponders, nearbyHelp, availableTransport, steps };
 }
 /* =====================================================================
@@ -525,9 +525,9 @@ function emergencyResponsePlan(emergency, personnel, computedInventory, transpor
 function aiAssistantAnswer(question, ctx){
   const q = question.toLowerCase();
   const { computedInventory, risk, recs, transport, weatherMap, resupplyDaysByStation } = ctx;
- 
+
   const findStationId = ()=> STATIONS.find(s=> q.includes(s.name.toLowerCase()) || q.includes(s.id))?.id;
- 
+
   // "Can <station> survive a N-day supply delay?"
   const delayMatch = q.match(/(\d+)\s*-?\s*day/);
   if (q.includes("survive") && delayMatch){
@@ -551,7 +551,7 @@ function aiAssistantAnswer(question, ctx){
         : `No immediate action required; continue monitoring.`,
     };
   }
- 
+
   if (q.includes("critical") && (q.includes("inventory")||q.includes("item")||q.includes("stock"))){
     const crit = computedInventory.filter(r=>r.status==="CRITICAL");
     return {
@@ -561,7 +561,7 @@ function aiAssistantAnswer(question, ctx){
       recommendation: crit.length ? `Prioritize ${crit[0].item} at ${STATIONS.find(s=>s.id===crit[0].station)?.name} in the next shipment.` : "Maintain current resupply cadence.",
     };
   }
- 
+
   if (q.includes("next shipment") || q.includes("should be sent") || (q.includes("send") && q.includes("shipment"))){
     const top = recs.slice(0,4);
     return {
@@ -571,7 +571,7 @@ function aiAssistantAnswer(question, ctx){
       recommendation: top.map(r=>r.recommendation).join(" "),
     };
   }
- 
+
   if (q.includes("which station") && q.includes("help")){
     const stId = findStationId() || "bharati";
     const target = recs.find(r=>r.station===stId);
@@ -584,7 +584,7 @@ function aiAssistantAnswer(question, ctx){
       recommendation: donor ? `Transfer ${Math.min(donor.surplus, target.shortage)} ${target.unit} of ${target.item} from ${donor.name}.` : `Expedite external resupply for ${target.item}.`,
     };
   }
- 
+
   if (q.includes("fuel") && q.includes("20")){
     const sim = runSimulation(["fuel20"], INVENTORY0, weatherMap, resupplyDaysByStation, transport);
     const fuelRows = sim.computed.filter(r=>r.category==="Fuel");
@@ -596,7 +596,7 @@ function aiAssistantAnswer(question, ctx){
       recommendation: sim.recommendation,
     };
   }
- 
+
   if (q.includes("cargo") && q.includes("priorit")){
     const top = [...CARGO0].sort((a,b)=> ({HIGH:0,MEDIUM:1,NORMAL:2}[a.priority]) - ({HIGH:0,MEDIUM:1,NORMAL:2}[b.priority]) ).slice(0,5);
     return {
@@ -606,7 +606,7 @@ function aiAssistantAnswer(question, ctx){
       recommendation: "Load HIGH priority items first and closest to the exit for fastest unloading.",
     };
   }
- 
+
   // fallback: mission health summary
   return {
     answer: `Mission health is currently ${risk.score}/100 (${risk.level}).`,
@@ -615,7 +615,7 @@ function aiAssistantAnswer(question, ctx){
     recommendation: recs[0]?.recommendation ?? "No immediate action required. Continue monitoring.",
   };
 }
- 
+
 const AI_SUGGESTED_QUESTIONS = [
   "Can Bharati survive a 10-day supply delay?",
   "Which inventory items are critical?",
@@ -642,7 +642,7 @@ function GlobalStyle(){
       @keyframes pulseDot { 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
       input, select, textarea { outline: none; }
       ::placeholder { color: ${T.iceFaint}; }
- 
+
       @media (max-width: 768px) {
         .polar-login-grid {
           grid-template-columns: 1fr !important;
@@ -659,7 +659,7 @@ function GlobalStyle(){
     `}</style>
   );
 }
- 
+
 function Panel({ title, icon:Icon, right, children, className="", pad=true, bg=true }){
   return (
     <div className={`polar-corner ${className}`} style={{
@@ -678,7 +678,7 @@ function Panel({ title, icon:Icon, right, children, className="", pad=true, bg=t
     </div>
   );
 }
- 
+
 function statusColors(){ return {
   SAFE:T.green, OPERATIONAL:T.green, READY:T.green, LOW:T.green, ON_DUTY:T.green, RECEIVED:T.green, ARRIVED:T.green, RESOLVED:T.green,
   WARNING:T.amber, MEDIUM:T.amber, MODERATE:T.amber, DELAYED:T.amber, FAIR:T.amber, MAINTENANCE:T.amber, IN_TRANSIT:T.cyan,
@@ -698,7 +698,7 @@ function StatusBadge({ status }){
     </span>
   );
 }
- 
+
 function KPI({ label, value, unit, icon:Icon, accent }){
   return (
     <div className="polar-corner" style={{ background:T.panel, border:`1px solid ${T.border}`, borderRadius:10, padding:"14px 16px" }}>
@@ -712,7 +712,7 @@ function KPI({ label, value, unit, icon:Icon, accent }){
     </div>
   );
 }
- 
+
 function DataTable({ columns, rows, onRowClick }){
   return (
     <div className="polar-scroll" style={{ overflowX:"auto", border:`1px solid ${T.border}`, borderRadius:10 }}>
@@ -741,7 +741,7 @@ function DataTable({ columns, rows, onRowClick }){
     </div>
   );
 }
- 
+
 function Modal({ title, onClose, children, width=520 }){
   return (
     <div style={{ position:"fixed", inset:0, background:T.overlay, zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:16 }} onClick={onClose}>
@@ -755,7 +755,7 @@ function Modal({ title, onClose, children, width=520 }){
     </div>
   );
 }
- 
+
 function Toast({ toasts }){
   return (
     <div style={{ position:"fixed", bottom:16, right:16, zIndex:200, display:"flex", flexDirection:"column", gap:8 }}>
@@ -767,7 +767,7 @@ function Toast({ toasts }){
     </div>
   );
 }
- 
+
 function Field({ label, children }){
   return (
     <label style={{ display:"block", marginBottom:12 }}>
@@ -777,7 +777,7 @@ function Field({ label, children }){
   );
 }
 function inputStyle(){ return { width:"100%", background:T.panel, border:`1px solid ${T.border}`, borderRadius:8, padding:"8px 10px", color:T.ice, fontSize:13 }; }
- 
+
 function Btn({ children, onClick, variant="primary", icon:Icon, type="button", disabled }){
   const styles = {
     primary: { background:T.cyan, color:"#FFFFFF", border:`1px solid ${T.cyan}` },
@@ -793,7 +793,7 @@ function Btn({ children, onClick, variant="primary", icon:Icon, type="button", d
     </button>
   );
 }
- 
+
 function EmptyState({ label }){
   return <div style={{ padding:"32px 12px", textAlign:"center", color:T.iceFaint, fontSize:13 }}>{label}</div>;
 }
@@ -808,7 +808,7 @@ const PORTS = {
   maitri:  { name:"Cape Town",  lat:-33.92, lng:18.42 },
   bharati: { name:"Fremantle",  lat:-32.06, lng:115.74 },
 };
- 
+
 function loadLeaflet(onReady){
   if (typeof window==="undefined") return;
   if (window.L){ onReady(window.L); return; }
@@ -829,14 +829,14 @@ function loadLeaflet(onReady){
   script.addEventListener("load", ()=> onReady(window.L));
   if (window.L) onReady(window.L);
 }
- 
+
 function bearingDeg(a, b){
   const toRad = d=>d*Math.PI/180, toDeg = r=>(r*180/Math.PI+360)%360;
   const y = Math.sin(toRad(b.lng-a.lng)) * Math.cos(toRad(b.lat));
   const x = Math.cos(toRad(a.lat))*Math.sin(toRad(b.lat)) - Math.sin(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.cos(toRad(b.lng-a.lng));
   return toDeg(Math.atan2(y, x));
 }
- 
+
 const BOAT_SVG = (color, angle)=> `
   <div style="transform:rotate(${angle}deg);width:26px;height:26px;display:flex;align-items:center;justify-content:center;">
     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -846,15 +846,15 @@ const BOAT_SVG = (color, angle)=> `
       <path d="M12 10V4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/>
     </svg>
   </div>`;
- 
+
 function PolarMap({ stations, transport, emergencies, onSelectStation, selected, themeMode }){
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const markersRef = useRef({});
   const [ready, setReady] = useState(false);
- 
+
   useEffect(()=>{ loadLeaflet(()=> setReady(true)); }, []);
- 
+
   // create the map + satellite tile layer + routes + vessels once
   useEffect(()=>{
     if (!ready || !containerRef.current || mapRef.current) return;
@@ -865,12 +865,12 @@ function PolarMap({ stations, transport, emergencies, onSelectStation, selected,
       attribution: "Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics",
     }).addTo(map);
     mapRef.current = map;
- 
+
     const maitri = stations.find(s=>s.id==="maitri");
     const bharati = stations.find(s=>s.id==="bharati");
     const dg = stations.find(s=>s.id==="dg");
     const routes = [[PORTS.maitri, maitri], [PORTS.bharati, bharati], [maitri, dg]].filter(([a,b])=>a&&b);
- 
+
     routes.forEach(([a,b])=>{
       L.polyline([[a.lat,a.lng],[b.lat,b.lng]], { color:"#49D6E8", weight:2, dashArray:"5 7", opacity:0.85 }).addTo(map);
     });
@@ -880,10 +880,10 @@ function PolarMap({ stations, transport, emergencies, onSelectStation, selected,
       const icon = L.divIcon({ className:"polar-boat-icon", html:BOAT_SVG("#49D6E8", bearingDeg(a,b)), iconSize:[26,26], iconAnchor:[13,13] });
       L.marker([lat,lng], { icon, interactive:false }).addTo(map);
     });
- 
+
     setTimeout(()=> map.invalidateSize(), 60);
   }, [ready]);
- 
+
   // (re)draw station markers when stations, selection, emergencies, or theme change
   useEffect(()=>{
     if (!ready || !mapRef.current) return;
@@ -908,16 +908,16 @@ function PolarMap({ stations, transport, emergencies, onSelectStation, selected,
       markersRef.current[s.id] = marker;
     });
   }, [ready, stations, selected, emergencies, themeMode]);
- 
+
   // fly to a station when it's selected from elsewhere in the app
   useEffect(()=>{
     if (!ready || !mapRef.current || !selected) return;
     const s = stations.find(x=>x.id===selected);
     if (s) mapRef.current.flyTo([s.lat, s.lng], Math.max(mapRef.current.getZoom(), 5), { duration:0.8 });
   }, [selected, ready]);
- 
+
   useEffect(()=> ()=>{ if (mapRef.current){ mapRef.current.remove(); mapRef.current = null; } }, []);
- 
+
   return (
     <div style={{ position:"relative", width:"100%", aspectRatio:"16/10", borderRadius:10, overflow:"hidden", border:`1px solid ${T.border}` }}>
       <div ref={containerRef} style={{ width:"100%", height:"100%", background:T.mapBg }} />
@@ -934,7 +934,7 @@ function PolarMap({ stations, transport, emergencies, onSelectStation, selected,
     </div>
   );
 }
- 
+
 /* =====================================================================
    LOGIN VIEW
 ===================================================================== */
@@ -943,7 +943,7 @@ function LoginView({ onLogin, themeMode, onToggleTheme }){
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [clock] = useState(()=> new Date("2026-09-13T08:14:00"));
- 
+
   function submit(e){
     e.preventDefault();
     const acct = DEMO_ACCOUNTS.find(a=>a.email===email.trim().toLowerCase() && a.password===password);
@@ -951,7 +951,7 @@ function LoginView({ onLogin, themeMode, onToggleTheme }){
     setError("");
     onLogin(acct);
   }
- 
+
   return (
     <div className="polar-root" style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", position:"relative", padding:16 }}>
       <GlobalStyle/>
@@ -1020,7 +1020,7 @@ function DashboardView({ data, onNavigate, onSelectStation, selectedStation }){
   const activeEmg = emergencies.filter(e=>e.status!=="RESOLVED").length;
   const avgWx = Object.values(weatherMap).some(w=>w.severity==="SEVERE") ? "SEVERE" : Object.values(weatherMap).some(w=>w.severity==="MODERATE") ? "MODERATE" : "LOW";
   const nextResupply = transport.filter(t=>t.type==="Ship").sort((a,b)=>a.etaDays-b.etaDays)[0];
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(6,1fr)", gap:12 }}>
@@ -1031,7 +1031,7 @@ function DashboardView({ data, onNavigate, onSelectStation, selectedStation }){
         <KPI label="CRITICAL ITEMS" value={criticalItems} unit="" icon={AlertTriangle} accent={criticalItems?T.red:T.green}/>
         <KPI label="ACTIVE EMERGENCIES" value={activeEmg} unit="" icon={Siren} accent={activeEmg?T.red:T.green}/>
       </div>
- 
+
       <div style={{ display:"grid", gridTemplateColumns:"1.6fr 1fr", gap:14 }}>
         <Panel title="Operations Map" icon={MapPin} right={<span className="polar-mono" style={{ fontSize:10, color:T.iceFaint }}>Click a station</span>}>
           <PolarMap stations={STATIONS} transport={transport} emergencies={emergencies} onSelectStation={onSelectStation} selected={selectedStation} themeMode={data.themeMode} />
@@ -1041,7 +1041,7 @@ function DashboardView({ data, onNavigate, onSelectStation, selectedStation }){
             <span style={{ color:T.cyan }}>┄ Cargo Route</span>
           </div>
         </Panel>
- 
+
         <div style={{ display:"grid", gap:14 }}>
           <Panel title="Mission Risk Contributors" icon={Activity}>
             <div style={{ fontSize:30, fontWeight:700, color: statusColors()[risk.level], marginBottom:4 }} className="polar-mono">{risk.score}<span style={{ fontSize:13, color:T.iceDim }}>/100</span></div>
@@ -1068,7 +1068,7 @@ function DashboardView({ data, onNavigate, onSelectStation, selectedStation }){
           </Panel>
         </div>
       </div>
- 
+
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
         <Panel title="Weather Risk" icon={CloudSnow} right={<StatusBadge status={avgWx}/>}>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10 }}>
@@ -1112,14 +1112,14 @@ function ExpeditionsView({ data, actions }){
   const { expeditions } = data;
   const [modal, setModal] = useState(null); // "new" | expedition object
   const [form, setForm] = useState({ name:"", description:"", destination:"maitri", startDate:"", endDate:"", teamSize:10, priority:"MEDIUM", route:"", nextResupply:"" });
- 
+
   function openNew(){ setForm({ name:"", description:"", destination:"maitri", startDate:"", endDate:"", teamSize:10, priority:"MEDIUM", route:"", nextResupply:"" }); setModal("new"); }
   function save(){
     if (!form.name.trim()) return;
     actions.addExpedition(form);
     setModal(null);
   }
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
@@ -1139,7 +1139,7 @@ function ExpeditionsView({ data, actions }){
           onRowClick={r=>setModal(r)}
         />
       </Panel>
- 
+
       {modal && (
         <Modal title={modal==="new" ? "New Expedition" : `Expedition ${modal.id}`} onClose={()=>setModal(null)}>
           {modal==="new" ? (
@@ -1188,7 +1188,7 @@ function ExpeditionsView({ data, actions }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    CARGO VIEW
 ===================================================================== */
@@ -1198,14 +1198,14 @@ function CargoView({ data, actions }){
   const [catFilter, setCatFilter] = useState("ALL");
   const [selected, setSelected] = useState(null);
   const [showOptimizer, setShowOptimizer] = useState(false);
- 
+
   const filtered = cargo.filter(c=>
     (catFilter==="ALL"||c.category===catFilter) &&
     (c.name.toLowerCase().includes(search.toLowerCase()) || c.id.toLowerCase().includes(search.toLowerCase()))
   );
- 
+
   const nextStatus = { REQUESTED:"APPROVED", APPROVED:"PACKED", PACKED:"LOADED", LOADED:"IN_TRANSIT", IN_TRANSIT:"ARRIVED", ARRIVED:"RECEIVED" };
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
@@ -1235,7 +1235,7 @@ function CargoView({ data, actions }){
           onRowClick={setSelected}
         />
       </Panel>
- 
+
       {selected && (
         <Modal title={`${selected.id} — ${selected.name}`} onClose={()=>setSelected(null)}>
           <div style={{ display:"grid", gap:6, fontSize:13, marginBottom:14 }}>
@@ -1256,20 +1256,20 @@ function CargoView({ data, actions }){
           </div>
         </Modal>
       )}
- 
+
       {showOptimizer && <StowageOptimizerModal cargo={cargo} onClose={()=>setShowOptimizer(false)} />}
     </div>
   );
 }
- 
+
 function StowageOptimizerModal({ cargo, onClose }){
   const [capacity, setCapacity] = useState(12000);
   const [volume, setVolume] = useState(60);
   const [result, setResult] = useState(null);
   const candidateCargo = cargo.filter(c=>["REQUESTED","APPROVED","PACKED"].includes(c.status));
- 
+
   function optimize(){ setResult(optimizeStowage(candidateCargo, capacity, volume)); }
- 
+
   return (
     <Modal title="Smart Cargo Stowage Optimizer" onClose={onClose} width={640}>
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr auto", gap:12, marginBottom:14, alignItems:"end" }}>
@@ -1346,7 +1346,7 @@ function TransportView({ data, actions }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    INVENTORY VIEW — the predictive engine surfaced
 ===================================================================== */
@@ -1360,7 +1360,7 @@ function InventoryView({ data }){
     STATIONS.forEach(s=>{ obj[s.name] = Math.round(catRows.filter(r=>r.station===s.id).reduce((a,r)=>a+r.daysRemaining,0)/Math.max(1,catRows.filter(r=>r.station===s.id).length)); });
     return obj;
   });
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
@@ -1370,7 +1370,7 @@ function InventoryView({ data }){
           {STATIONS.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
       </div>
- 
+
       <Panel title="Days of Supply Remaining — Fuel / Food / Medicine" icon={BarChart3}>
         <div style={{ width:"100%", height:220 }}>
           <ResponsiveContainer>
@@ -1387,7 +1387,7 @@ function InventoryView({ data }){
           </ResponsiveContainer>
         </div>
       </Panel>
- 
+
       <Panel pad={false}>
         <DataTable
           columns={[
@@ -1440,7 +1440,7 @@ function AssetsView({ data }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    PERSONNEL VIEW
 ===================================================================== */
@@ -1450,7 +1450,7 @@ function PersonnelView({ data }){
   const [search, setSearch] = useState("");
   const rows = personnel.filter(p=>(stationFilter==="ALL"||p.station===stationFilter) && p.name.toLowerCase().includes(search.toLowerCase()));
   const byStation = STATIONS.map(s=>({ station:s, count: personnel.filter(p=>p.station===s.id).length }));
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
@@ -1482,7 +1482,7 @@ function PersonnelView({ data }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    STATIONS VIEW — digital twin
 ===================================================================== */
@@ -1500,7 +1500,7 @@ function StationsView({ data, initialSelected }){
   const food = sInventory.find(r=>r.item==="Fresh Food Rations");
   const med = sInventory.find(r=>r.item==="Medical Oxygen");
   const pct = (r)=> r ? Math.max(0,Math.min(100,Math.round(((r.quantity-r.reserved)/(r.minThreshold*4))*100))) : 0;
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", gap:8 }}>
@@ -1511,14 +1511,14 @@ function StationsView({ data, initialSelected }){
             border:`1px solid ${selected===st.id?T.cyan:T.border}` }}>{st.name}</button>
         ))}
       </div>
- 
+
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:12 }}>
         <KPI label="PERSONNEL" value={sPersonnel.length} unit="" icon={Users}/>
         <KPI label="RISK" value={risk.score} unit="/100" icon={ShieldAlert} accent={statusColors()[risk.level]}/>
         <KPI label="ACTIVE EMERGENCIES" value={sEmg.filter(e=>e.status!=="RESOLVED").length} unit="" icon={Siren} accent={sEmg.length?T.red:T.green}/>
         <KPI label="VEHICLES ON-SITE" value={sVehicles.length} unit="" icon={Truck}/>
       </div>
- 
+
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:14 }}>
         <Panel title="Fuel" icon={Fuel} right={fuel && <StatusBadge status={fuel.status}/>}>
           {fuel ? <><div className="polar-mono" style={{ fontSize:22, fontWeight:600 }}>{pct(fuel)}%</div><div style={{ fontSize:11, color:T.iceDim }}>{fuel.daysRemaining} days remaining</div></> : <EmptyState label="No data"/>}
@@ -1530,7 +1530,7 @@ function StationsView({ data, initialSelected }){
           {med ? <><div className="polar-mono" style={{ fontSize:22, fontWeight:600 }}>{pct(med)}%</div><div style={{ fontSize:11, color:T.iceDim }}>{med.daysRemaining} days remaining</div></> : <EmptyState label="No data"/>}
         </Panel>
       </div>
- 
+
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
         <Panel title="Weather" icon={CloudSnow}>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, fontSize:12, color:T.iceDim }}>
@@ -1557,21 +1557,21 @@ function EmergencyView({ data, actions }){
   const [modal, setModal] = useState(null);
   const [form, setForm] = useState({ station:"bharati", location:"", type:"MEDICAL", severity:"HIGH", affected:1 });
   const [planFor, setPlanFor] = useState(null);
- 
+
   function create(){
     if (!form.location.trim()) return;
     actions.addEmergency(form);
     setModal(false);
     setForm({ station:"bharati", location:"", type:"MEDICAL", severity:"HIGH", affected:1 });
   }
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
         <div style={{ fontSize:15, fontWeight:600 }}>Emergency Response Center</div>
         <Btn icon={Siren} onClick={()=>setModal(true)} variant="danger">Report Emergency</Btn>
       </div>
- 
+
       <div style={{ display:"grid", gap:12 }}>
         {emergencies.length===0 && <EmptyState label="No emergency incidents recorded."/>}
         {emergencies.map(e=>(
@@ -1590,7 +1590,7 @@ function EmergencyView({ data, actions }){
           </Panel>
         ))}
       </div>
- 
+
       {modal && (
         <Modal title="Report Emergency Incident" onClose={()=>setModal(false)}>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
@@ -1603,7 +1603,7 @@ function EmergencyView({ data, actions }){
           <Btn variant="danger" onClick={create} icon={Siren}>Create Incident</Btn>
         </Modal>
       )}
- 
+
       {planFor && (
         <Modal title={`Response Plan — ${planFor.id}`} onClose={()=>setPlanFor(null)} width={620}>
           {(() => {
@@ -1635,14 +1635,14 @@ function EmergencyView({ data, actions }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    SIMULATION CENTER
 ===================================================================== */
 function SimulationView({ data, savedSims, onSaveSim }){
   const [selectedScenarios, setSelectedScenarios] = useState([]);
   const [result, setResult] = useState(null);
- 
+
   function toggle(id){ setSelectedScenarios(s=> s.includes(id) ? s.filter(x=>x!==id) : [...s, id]); }
   function run(){
     if (!selectedScenarios.length) return;
@@ -1654,9 +1654,9 @@ function SimulationView({ data, savedSims, onSaveSim }){
     const r = runSimulation(["delay5"], INVENTORY0, data.weatherMap, data.resupplyDaysByStation, data.transport);
     setResult(r);
   }
- 
+
   const chartData = result ? Object.entries(result.byCategory).map(([category, status])=>({ category, riskLevel: status==="CRITICAL"?3:status==="WARNING"?2:1 })) : [];
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
@@ -1674,7 +1674,7 @@ function SimulationView({ data, savedSims, onSaveSim }){
         </div>
         <Btn onClick={run} icon={Activity}>Run Simulation</Btn>
       </Panel>
- 
+
       {result && (
         <>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
@@ -1699,7 +1699,7 @@ function SimulationView({ data, savedSims, onSaveSim }){
           </Panel>
         </>
       )}
- 
+
       {savedSims.length>0 && (
         <Panel title="Saved Simulations" icon={FileClock}>
           <div style={{ display:"grid", gap:8 }}>
@@ -1723,14 +1723,14 @@ function AIView({ data }){
     { role:"assistant", text:"POLAR AI Logistics Assistant online. Ask about inventory, resupply, transport risk, or emergency readiness — answers are generated from live mission data." }
   ]);
   const [input, setInput] = useState("");
- 
+
   function ask(q){
     if (!q.trim()) return;
     const ans = aiAssistantAnswer(q, data);
     setMessages(m=>[...m, { role:"user", text:q }, { role:"assistant", text:null, structured:ans }]);
     setInput("");
   }
- 
+
   return (
     <div style={{ display:"grid", gridTemplateColumns:"1fr 260px", gap:14, height:"calc(100vh - 150px)" }}>
       <Panel title="AI Logistics Assistant" icon={BrainCircuit} pad={false} className="" >
@@ -1773,7 +1773,7 @@ function AIView({ data }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    ANALYTICS VIEW
 ===================================================================== */
@@ -1783,7 +1783,7 @@ function AnalyticsView({ data }){
   const fuelSeries = days.map(d=>({ day:`D${d+1}`, Maitri: 9000 - d*110 + Math.sin(d)*80, Bharati: 4200 - d*95 + Math.cos(d)*60 }));
   const cargoThroughput = days.filter((_,i)=>i%Math.max(1,Math.floor(range/10))===0).map((d,i)=>({ day:`D${d+1}`, delivered: Math.round(4+Math.random()*6) }));
   const emgFrequency = ["Medical","Weather","Vehicle","Comms","Equipment"].map(t=>({ type:t, count: Math.round(1+Math.random()*4) }));
- 
+
   return (
     <div style={{ display:"grid", gap:14 }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
@@ -1824,7 +1824,7 @@ function AnalyticsView({ data }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    ALERTS VIEW
 ===================================================================== */
@@ -1860,7 +1860,7 @@ function AlertsView({ alerts, resolvedIds, onResolve }){
     </div>
   );
 }
- 
+
 /* =====================================================================
    AUDIT LOG VIEW
 ===================================================================== */
@@ -1899,12 +1899,12 @@ const NAV = [
   { id:"alerts", label:"Alerts", icon:Bell },
   { id:"audit", label:"Audit Log", icon:FileClock },
 ];
- 
+
 export default function PolarApp(){
   const [themeMode, setThemeMode] = useState("light");
   applyTheme(themeMode);
   const toggleTheme = ()=> setThemeMode(m => m==="dark" ? "light" : "dark");
- 
+
   const [session, setSession] = useState(null);
   const [view, setView] = useState("dashboard");
   const [toasts, setToasts] = useState([]);
@@ -1919,7 +1919,7 @@ export default function PolarApp(){
     { time:"2026-09-12 09:00", user:"Rohan Bhatt", action:"Updated cargo status", entity:"CGO-101", oldValue:"REQUESTED", newValue:"APPROVED" },
     { time:"2026-09-12 11:20", user:"Ananya Iyer", action:"Logged weather reading", entity:"Maitri", oldValue:"—", newValue:"Wind 34 km/h" },
   ]);
- 
+
   const [expeditions, setExpeditions] = useState([
     { id:"EXP-01", name:"Winter Resupply Run 12", description:"Scheduled resupply convoy to Bharati Station.", destination:"bharati", startDate:"2026-09-05", endDate:"2026-09-28", teamSize:14, status:"ACTIVE", priority:"HIGH", route:"Goa Port → Bharati Station", nextResupply:"2026-09-25" },
     { id:"EXP-02", name:"Maitri Structural Survey", description:"Glaciology and structural integrity survey at Maitri.", destination:"maitri", startDate:"2026-08-15", endDate:"2026-10-01", teamSize:8, status:"ACTIVE", priority:"MEDIUM", route:"Cape Town → Maitri Station", nextResupply:"2026-10-05" },
@@ -1932,7 +1932,7 @@ export default function PolarApp(){
   const [weatherMap, setWeatherMap] = useState(WEATHER0);
   const [emergencies, setEmergencies] = useState(EMERGENCIES0);
   const resupplyDaysByStation = { maitri:14, bharati:12, dg:16 };
- 
+
   function toast(message, type="info"){
     const id = Date.now()+Math.random();
     setToasts(t=>[...t, { id, message, type }]);
@@ -1950,7 +1950,7 @@ export default function PolarApp(){
       fn();
     }
   }
- 
+
   function toggleOnline(){
     if (online){ setOnline(false); setSyncState("OFFLINE"); toast("You are now offline. Changes will be queued.", "info"); }
     else {
@@ -1964,14 +1964,14 @@ export default function PolarApp(){
       }, 900);
     }
   }
- 
+
   const computedInventory = useMemo(()=> computeInventoryFull(INVENTORY0, weatherMap, resupplyDaysByStation), [weatherMap]);
   const risk = useMemo(()=> computeRisk(computedInventory, transport, weatherMap, emergencies, assets), [computedInventory, transport, weatherMap, emergencies, assets]);
   const alerts = useMemo(()=> generateAlerts(computedInventory, transport, assets, emergencies).filter(a=>!resolvedAlertIds.includes(a.id)), [computedInventory, transport, assets, emergencies, resolvedAlertIds]);
   const recs = useMemo(()=> resupplyRecommendations(computedInventory), [computedInventory]);
- 
+
   const data = { expeditions, cargo, transport, assets, personnel, weatherMap, emergencies, computedInventory, risk, alerts, recs, resupplyDaysByStation, themeMode };
- 
+
   const actions = {
     addExpedition:(f)=>{
       const id = `EXP-${String(expeditions.length+1).padStart(2,"0")}`;
@@ -1994,10 +1994,10 @@ export default function PolarApp(){
       queueOrApply(()=>{ setEmergencies(e=>e.map(x=>x.id===id?{...x,status:"RESOLVED"}:x)); logAudit("Resolved emergency", id, "MONITORING", "RESOLVED"); toast(`${id} resolved.`, "success"); }, `Resolve ${id}`);
     },
   };
- 
+
   function onSaveSim(sim){ setSavedSims(s=>[sim, ...s]); toast("Simulation result saved.", "success"); }
   function onResolveAlert(id){ setResolvedAlertIds(r=>[...r, id]); logAudit("Resolved alert", id, "ACTIVE", "RESOLVED"); }
- 
+
   const searchResults = useMemo(()=>{
     if (!globalSearch.trim()) return [];
     const q = globalSearch.toLowerCase();
@@ -2011,11 +2011,11 @@ export default function PolarApp(){
     emergencies.forEach(e=>{ if (e.type.toLowerCase().includes(q)) res.push({ type:"Emergency", label:e.id, go:"emergency" }); });
     return res.slice(0,8);
   }, [globalSearch, cargo, personnel, assets, expeditions, transport, emergencies]);
- 
+
   if (!session){
     return <LoginView onLogin={(acct)=>{ setSession(acct); toast(`Welcome, ${acct.name.split(" ")[0]}.`, "success"); }} themeMode={themeMode} onToggleTheme={toggleTheme} />;
   }
- 
+
   return (
     <div className="polar-root" style={{ minHeight:"100vh", display:"flex" }}>
       <GlobalStyle/>
@@ -2042,7 +2042,7 @@ export default function PolarApp(){
           <LogOut size={17}/>
         </button>
       </div>
- 
+
       {/* Main */}
       <div style={{ flex:1, display:"flex", flexDirection:"column", minWidth:0 }}>
         {/* Header */}
@@ -2077,7 +2077,7 @@ export default function PolarApp(){
             </div>
           </div>
         </div>
- 
+
         {/* Content */}
         <div className="polar-scroll" style={{ flex:1, overflowY:"auto", padding:20 }}>
           {view==="dashboard" && <DashboardView data={data} onNavigate={setView} onSelectStation={(id)=>{ setSelectedStation(id); setView("stations"); }} selectedStation={selectedStation}/>}
@@ -2100,4 +2100,3 @@ export default function PolarApp(){
     </div>
   );
 }
- 
